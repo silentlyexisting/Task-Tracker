@@ -9,8 +9,6 @@ group = 'hexlet.code'
 version = '1.0-SNAPSHOT'
 sourceCompatibility = '16'
 
-targetCompatibility = JavaVersion.VERSION_16
-
 
 application {
 	mainClass = 'hexlet.code.AppApplication'
