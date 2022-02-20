@@ -9,3 +9,15 @@ build:
 
 install:
 	 ./gradlew installDist
+
+test:
+	./gradlew test
+
+report:
+	./gradlew jacocoTestReport
+
+check-updates:
+	./gradlew dependencyUpdates
+
+make api-doc:
+	gradle clean generateOpenApiDocs
