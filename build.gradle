@@ -26,5 +26,14 @@ dependencies {
 
 }
 
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'hexlet.code.AppApplication'
+		)
+	}
+}
+
+
 task stage(dependsOn: ['clean', 'installDist'])
 installDist.mustRunAfter clean
