@@ -7,7 +7,7 @@ plugins {
 
 group = 'hexlet.code'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 
 application {
