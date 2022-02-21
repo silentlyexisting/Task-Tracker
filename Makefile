@@ -4,7 +4,7 @@ clean:
 build:
 	./gradlew clean build
 
-start:
+start-dev:
 	APP_ENV=dev ./gradlew bootRun
 
 start-prod:
