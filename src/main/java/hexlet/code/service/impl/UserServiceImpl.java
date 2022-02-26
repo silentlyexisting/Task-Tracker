@@ -5,13 +5,38 @@ import hexlet.code.exception.UserNotFoundException;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
+@AllArgsConstructor
+public class UserServiceImpl implements UserService, UserDetailsService {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    private static final List<SimpleGrantedAuthority> AUTHORITIES = List.of(new SimpleGrantedAuthority("USER"));
+
+    @Override
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username)
+                .map(this::convertToSpringUser)
+                .orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + username));
+    }
+
+    private UserDetails convertToSpringUser(final User user) {
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                AUTHORITIES
+        );
+    }
 
     @Override
     public User createUser(UserDto userDto) {
@@ -19,14 +44,21 @@ public class UserServiceImpl implements UserService {
                 userDto.getEmail(),
                 userDto.getFirstName(),
                 userDto.getLastName(),
-                userDto.getPassword()
+                passwordEncoder.encode(userDto.getPassword())
         );
         return userRepository.save(user);
     }
 
     @Override
-    public User findUserById(long id) {
-        return userRepository.findById(id)
+    public User updateUser(long id, UserDto dto) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
+
+        user.setEmail(dto.getEmail());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        return userRepository.save(user);
     }
+
 }
