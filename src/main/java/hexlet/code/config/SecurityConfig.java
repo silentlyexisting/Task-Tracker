@@ -70,7 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManagerBean(), loginRequest, tokenGenerator))
-                .addFilterBefore(new AuthorizationFilter(tokenGenerator, publicUrls), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new AuthorizationFilter(tokenGenerator, publicUrls),
+                        UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().disable()
                 .httpBasic().disable()
                 .formLogin().disable()

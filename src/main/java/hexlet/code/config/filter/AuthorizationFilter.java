@@ -1,9 +1,7 @@
 package hexlet.code.config.filter;
 
-import hexlet.code.config.SecurityConfig;
 import hexlet.code.config.component.TokenGenerator;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
