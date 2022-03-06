@@ -13,15 +13,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
+import static hexlet.code.config.SecurityConfig.AUTHORITIES;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    private static final List<SimpleGrantedAuthority> AUTHORITIES = List.of(new SimpleGrantedAuthority("USER"));
 
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
