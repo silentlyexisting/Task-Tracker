@@ -1,8 +1,8 @@
 package hexlet.code.config;
 
-import hexlet.code.config.component.TokenGenerator;
-import hexlet.code.config.filter.AuthenticationFilter;
-import hexlet.code.config.filter.AuthorizationFilter;
+import hexlet.code.config.security.component.TokenGenerator;
+import hexlet.code.config.security.filter.AuthenticationFilter;
+import hexlet.code.config.security.filter.AuthorizationFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

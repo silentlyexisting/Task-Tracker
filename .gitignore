@@ -8,6 +8,9 @@ build/
 *.mv.db
 *.trace.db
 
+### Node ###
+node
+
 ### STS ###
 .apt_generated
 .classpath
