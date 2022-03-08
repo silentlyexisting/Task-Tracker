@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-import static hexlet.code.config.SecurityConfig.AUTHORITIES;
+import static hexlet.code.config.security.SecurityConfig.AUTHORITIES;
 
 @Service
 @AllArgsConstructor
