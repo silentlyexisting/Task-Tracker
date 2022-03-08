@@ -1,6 +1,6 @@
-package hexlet.code.config.filter;
+package hexlet.code.config.security.filter;
 
-import hexlet.code.config.component.TokenGenerator;
+import hexlet.code.config.security.component.TokenGenerator;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY;
-import static hexlet.code.config.SecurityConfig.AUTHORITIES;
+import static hexlet.code.config.security.SecurityConfig.AUTHORITIES;
 
 public class AuthorizationFilter extends OncePerRequestFilter {
 
@@ -47,7 +47,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     }
 
     private UsernamePasswordAuthenticationToken buildAuthToken(final String username) {
-        return new UsernamePasswordAuthenticationToken(username,
+        return new UsernamePasswordAuthenticationToken(
+                username,
                 null,
                 AUTHORITIES);
     }

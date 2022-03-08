@@ -1,4 +1,4 @@
-package hexlet.code.config;
+package hexlet.code.config.security;
 
 import hexlet.code.config.security.component.TokenGenerator;
 import hexlet.code.config.security.filter.AuthenticationFilter;
@@ -73,8 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new AuthorizationFilter(tokenGenerator, publicUrls),
                         UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().disable()
-                .httpBasic().disable()
                 .formLogin().disable()
+                .httpBasic().disable()
                 .logout().disable();
 
     }
