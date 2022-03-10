@@ -25,5 +25,8 @@ report:
 check-updates:
 	./gradlew dependencyUpdates
 
+migrations:
+	./gradlew diffChangeLog
+
 make api-doc:
 	gradle clean generateOpenApiDocs

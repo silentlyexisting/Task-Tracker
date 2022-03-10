@@ -1,7 +1,7 @@
 package hexlet.code.service.impl;
 
 import hexlet.code.dto.UserDto;
-import hexlet.code.exception.UserNotFoundException;
+import hexlet.code.exception.CustomNotFoundException;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User updateUser(long id, UserDto dto) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+                .orElseThrow(() -> new CustomNotFoundException(id));
 
         user.setEmail(dto.getEmail());
         user.setFirstName(dto.getFirstName());

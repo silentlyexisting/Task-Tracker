@@ -37,7 +37,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(final HttpServletRequest request,
                                     final HttpServletResponse response,
                                     final FilterChain filterChain) throws ServletException, IOException {
-        final String header = request.getHeader(AUTHORIZATION);
+        String header = request.getHeader(AUTHORIZATION);
         final String token = header.replaceFirst("^" + BEARER, "");
         final String username = tokenGenerator.verify(token).get(SPRING_SECURITY_FORM_USERNAME_KEY).toString();
         final UsernamePasswordAuthenticationToken authToken = buildAuthToken(username);

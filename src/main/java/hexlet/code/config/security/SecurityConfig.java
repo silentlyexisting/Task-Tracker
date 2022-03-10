@@ -25,6 +25,7 @@ import static hexlet.code.controller.UserController.USERS_CONTROLLER_PATH;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
+import static hexlet.code.controller.TaskStatusController.TASK_STATUS_CONTROLLER_PATH;
 
 @Configuration
 @EnableWebSecurity
@@ -47,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 loginRequest,
                 new AntPathRequestMatcher(baseUrl + USERS_CONTROLLER_PATH, POST.toString()),
                 new AntPathRequestMatcher(baseUrl + USERS_CONTROLLER_PATH, GET.toString()),
+                new AntPathRequestMatcher(baseUrl + TASK_STATUS_CONTROLLER_PATH, POST.toString()),
+                new AntPathRequestMatcher(baseUrl + TASK_STATUS_CONTROLLER_PATH, GET.toString()),
                 new NegatedRequestMatcher(new AntPathRequestMatcher(baseUrl + "/**"))
         );
         this.userDetailsService = userDetailsService;
