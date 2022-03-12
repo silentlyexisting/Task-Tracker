@@ -27,6 +27,7 @@ import static hexlet.code.controller.TaskStatusController.TASK_STATUS_CONTROLLER
 public class TaskStatusController {
 
     public static final String TASK_STATUS_CONTROLLER_PATH = "/statuses";
+    private static final String ID = "/{id}";
 
     private final TaskStatusService taskStatusService;
     private final TaskStatusRepository taskStatusRepository;
@@ -40,7 +41,7 @@ public class TaskStatusController {
         return taskStatusService.createTaskStatus(taskStatusDto);
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = ID)
     public TaskStatus getTaskStatus(@PathVariable(name = "id") long id) {
         return taskStatusRepository.findById(id)
                 .orElseThrow(() -> new CustomNotFoundException(id));
@@ -51,14 +52,14 @@ public class TaskStatusController {
         return taskStatusRepository.findAll();
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = ID)
 //    @PreAuthorize(ONLY_OWNER_BY_ID)
     public TaskStatus updateTaskStatus(@PathVariable(name = "id") long id,
                                        @RequestBody @Valid TaskStatusDto taskStatusDto) {
         return taskStatusService.updateTaskStatus(id, taskStatusDto);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = ID)
 //    @PreAuthorize(ONLY_OWNER_BY_ID)
     public void deleteTaskStatus(@PathVariable(name = "id") long id) {
         taskStatusRepository.deleteById(id);
