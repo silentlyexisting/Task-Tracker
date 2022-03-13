@@ -25,7 +25,10 @@ import static hexlet.code.controller.UserController.USERS_CONTROLLER_PATH;
 @AllArgsConstructor
 @RequestMapping("${base-url}" + USERS_CONTROLLER_PATH)
 public class UserController {
+
     public static final String USERS_CONTROLLER_PATH = "/users";
+    public static final String ID = "/{id}";
+
 
     private final UserService userService;
     private final UserRepository userRepository;
@@ -39,7 +42,7 @@ public class UserController {
         return userService.createUser(userDto);
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = ID)
     public User getUser(@PathVariable(name = "id") long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new CustomNotFoundException(id));
@@ -50,14 +53,14 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = ID)
     @PreAuthorize(ONLY_OWNER_BY_ID)
     public User updateUser(@PathVariable long id,
                            @RequestBody @Valid UserDto userDto) {
         return userService.updateUser(id, userDto);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = ID)
     @PreAuthorize(ONLY_OWNER_BY_ID)
     public void deleteUser(@PathVariable long id) {
         userRepository.deleteById(id);

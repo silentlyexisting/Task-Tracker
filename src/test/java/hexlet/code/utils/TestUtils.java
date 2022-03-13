@@ -1,7 +1,9 @@
 package hexlet.code.utils;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.config.security.component.TokenGenerator;
+import hexlet.code.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -22,8 +24,11 @@ import java.util.Map;
 @Component
 public class TestUtils {
 
+    public static final ObjectMapper MAPPER = new ObjectMapper();
     public static final String FIXTURES_PATH = "src/test/resources/fixtures/";
     public static final String BASE_URL = "/api";
+    public static final String DEFAULT_USER_DATA = "defaultUserData.json";
+    public static final String UPDATE_USER_DATA = "updateUserData.json";
 
     @Autowired
     private MockMvc mockMvc;
@@ -31,8 +36,17 @@ public class TestUtils {
     @Autowired
     private TokenGenerator tokenGenerator;
 
+    public String readFileContent(String path) throws IOException {
+        return Files.readString(Path.of(path).toAbsolutePath().normalize());
+    }
+
+    public UserDto getTestRegistrationDto() throws IOException {
+        String json = readFileContent(FIXTURES_PATH + DEFAULT_USER_DATA);
+        return MAPPER.readValue(json, UserDto.class);
+    }
+
     public MockHttpServletResponse regDefaultUser() throws Exception {
-        String json = readFile(FIXTURES_PATH + "defaultUserData.json");
+        String json = readFileContent(FIXTURES_PATH + DEFAULT_USER_DATA);
         return perform(
                 post(BASE_URL + USERS_CONTROLLER_PATH)
                         .content(json)
@@ -51,7 +65,4 @@ public class TestUtils {
         return perform(request);
     }
 
-    public String readFile(String path) throws IOException {
-        return Files.readString(Path.of(path).toAbsolutePath().normalize());
-    }
 }

@@ -37,13 +37,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final TokenGenerator tokenGenerator;
 
+    public static final String LOGIN = "/login";
+
     public static final List<SimpleGrantedAuthority> AUTHORITIES = List.of(new SimpleGrantedAuthority("USER"));
 
 
     public SecurityConfig(@Value("${base-url}") final String baseUrl,
                           final UserDetailsService userDetailsService,
                           PasswordEncoder passwordEncoder, TokenGenerator tokenGenerator) {
-        this.loginRequest = new AntPathRequestMatcher(baseUrl + "/login", POST.toString());
+        this.loginRequest = new AntPathRequestMatcher(baseUrl + LOGIN, POST.toString());
         this.publicUrls = new OrRequestMatcher(
                 loginRequest,
                 new AntPathRequestMatcher(baseUrl + USERS_CONTROLLER_PATH, POST.toString()),

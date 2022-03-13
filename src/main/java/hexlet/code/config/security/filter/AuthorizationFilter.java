@@ -42,6 +42,16 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         final String username = tokenGenerator.verify(token).get(SPRING_SECURITY_FORM_USERNAME_KEY).toString();
         final UsernamePasswordAuthenticationToken authToken = buildAuthToken(username);
 
+//        final var authToken = Optional.ofNullable(request.getHeader(AUTHORIZATION))
+//                .map(header -> header.replaceFirst("^" + BEARER, ""))
+//                .map(String::trim)
+//                .map(tokenGenerator::verify)
+//                .map(claims -> claims.get(SPRING_SECURITY_FORM_USERNAME_KEY))
+//                .map(Object::toString)
+//                .map(this::buildAuthToken)
+//                .orElseThrow();
+
+
         SecurityContextHolder.getContext().setAuthentication(authToken);
         filterChain.doFilter(request, response);
     }
