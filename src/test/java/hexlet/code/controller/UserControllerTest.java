@@ -14,7 +14,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import static hexlet.code.config.security.SecurityConfig.LOGIN;
 import static hexlet.code.utils.TestUtils.UPDATE_USER_DATA;
-import static org.junit.jupiter.api.TestInstance.*;
+import static org.junit.jupiter.api.TestInstance.Lifecycle;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import static hexlet.code.controller.UserController.USERS_CONTROLLER_PATH;
@@ -79,7 +79,7 @@ class UserControllerTest {
     }
 
     @Test
-    public void getUserTest() throws Exception {
+    public void getUserByIdTest() throws Exception {
         utils.regDefaultUser();
         final User expectedUser = userRepository.findAll().get(0);
 
@@ -97,17 +97,6 @@ class UserControllerTest {
         assertThat(body).contains("Ivan");
         assertThat(body).contains("Pavlov");
     }
-
-//    @Test
-//    public void getUnauthenticatedUserTest() throws Exception {
-//        final User expectedUser = userRepository.findAll().get(0);
-//
-//        MockHttpServletResponse response = utils.perform(
-//                get(utils.BASE_URL + USERS_CONTROLLER_PATH + "/{id}", expectedUser.getId())
-//        ).andReturn().getResponse();
-//
-//        assertThat(response.getStatus()).isEqualTo(401);
-//    }
 
     @Test
     public void getAllUsersTest() throws Exception {
