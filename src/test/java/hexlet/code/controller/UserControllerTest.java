@@ -1,5 +1,7 @@
 package hexlet.code.controller;
 
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.junit5.api.DBRider;
 import hexlet.code.dto.LoginDto;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
@@ -33,6 +35,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 
 @TestInstance(Lifecycle.PER_CLASS)
+@DBRider
+@DataSet("dataset.yml")
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -53,10 +57,9 @@ class UserControllerTest {
 
     @Test
     public void registrationUserTest() throws Exception {
-        assertThat(userRepository.count()).isEqualTo(0);
-        final var request = utils.regDefaultUser();
-        assertThat(request.getStatus()).isEqualTo(200);
         assertThat(userRepository.count()).isEqualTo(1);
+        utils.regDefaultUser();
+        assertThat(userRepository.count()).isEqualTo(2);
     }
 
     @Test
@@ -81,7 +84,7 @@ class UserControllerTest {
     @Test
     public void getUserByIdTest() throws Exception {
         utils.regDefaultUser();
-        final User expectedUser = userRepository.findAll().get(0);
+        final User expectedUser = userRepository.findAll().get(1);
 
         MockHttpServletResponse response = utils.perform(
                 get(utils.BASE_URL + USERS_CONTROLLER_PATH + ID, expectedUser.getId()),
@@ -92,7 +95,7 @@ class UserControllerTest {
 
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(response.getContentType()).isEqualTo(APPLICATION_JSON.toString());
-        assertThat(body).contains("example@gmail.com");
+        assertThat(body).contains("test@gmail.com");
         assertThat(userRepository.findByEmail("example@gmail.com")).isNotNull();
         assertThat(body).contains("Ivan");
         assertThat(body).contains("Pavlov");
@@ -110,7 +113,7 @@ class UserControllerTest {
 
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(response.getContentType()).isEqualTo(APPLICATION_JSON.toString());
-        assertThat(body).contains("example@gmail.com");
+        assertThat(body).contains("test@gmail.com");
     }
 
     @Test
@@ -124,7 +127,7 @@ class UserControllerTest {
     @Test
     public void testUpdateUserData() throws Exception {
         utils.regDefaultUser();
-        final User expectedUser = userRepository.findAll().get(0);
+        final User expectedUser = userRepository.findAll().get(1);
 
 
         MockHttpServletResponse putResponse = utils.perform(
@@ -138,21 +141,21 @@ class UserControllerTest {
 
         assertThat(putResponse.getStatus()).isEqualTo(200);
         assertThat(body).contains("updated@gmail.com");
-        assertThat(body).contains("newFirstName");
-        assertThat(body).contains("newLastName");
+        assertThat(body).contains("NewFirstName");
+        assertThat(body).contains("NewLastName");
     }
 
     @Test
     public void deleteUserTest() throws Exception {
         utils.regDefaultUser();
-        final User expectedUser = userRepository.findAll().get(0);
+        final User expectedUser = userRepository.findAll().get(1);
         MockHttpServletResponse response = utils.perform(
                 delete(utils.BASE_URL + USERS_CONTROLLER_PATH + ID, expectedUser.getId()),
                 expectedUser.getEmail()
         ).andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(userRepository.count()).isEqualTo(0);
+        assertThat(userRepository.count()).isEqualTo(1);
     }
 
 }
