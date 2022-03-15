@@ -1,0 +1,12 @@
+task_statuses:
+  - id: 3
+    name: Closed
+    created_at: 2022-03-14T19:27:35.641+00:00
+
+users:
+  - id: 10
+    first_name: ExampleName
+    last_name: ExampleLastName
+    email: example@gmail.com
+    password: $2a$12$lP1HdpYa4yT./wnilPzf0OoxaVHJunEkkxw4SwkYL5obPjq.fG8Xy
+    created_at: 2022-03-14T19:27:35.641+00:00
