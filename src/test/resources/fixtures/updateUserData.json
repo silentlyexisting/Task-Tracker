@@ -1,6 +1,6 @@
 {
   "email": "updated@gmail.com",
-  "firstName": "newFirstName",
-  "lastName": "newLastName",
+  "firstName": "NewFirstName",
+  "lastName": "NewLastName",
   "password": "updatedPassword"
 }
