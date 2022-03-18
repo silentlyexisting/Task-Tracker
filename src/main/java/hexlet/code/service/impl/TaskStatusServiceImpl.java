@@ -25,7 +25,7 @@ public class TaskStatusServiceImpl implements TaskStatusService {
     @Override
     public TaskStatus updateTaskStatus(long id, TaskStatusDto taskStatusDto) {
         TaskStatus taskStatusToUpdate = taskStatusRepository.findById(id)
-                .orElseThrow(() -> new CustomNotFoundException(id));
+                .orElseThrow(() -> new CustomNotFoundException("Task Status"));
 
         taskStatusToUpdate.setName(taskStatusDto.getName());
         return taskStatusRepository.save(taskStatusToUpdate);

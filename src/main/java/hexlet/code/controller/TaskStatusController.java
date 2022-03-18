@@ -44,11 +44,11 @@ public class TaskStatusController {
     @GetMapping(path = ID)
     public TaskStatus getTaskStatus(@PathVariable(name = "id") long id) {
         return taskStatusRepository.findById(id)
-                .orElseThrow(() -> new CustomNotFoundException(id));
+                .orElseThrow(() -> new CustomNotFoundException("Task Status"));
     }
 
     @GetMapping
-    public List<TaskStatus> getTaskStatuses() {
+    public List<TaskStatus> getAllTaskStatuses() {
         return taskStatusRepository.findAll();
     }
 

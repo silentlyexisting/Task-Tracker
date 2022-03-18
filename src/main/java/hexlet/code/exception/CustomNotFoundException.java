@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class CustomNotFoundException extends RuntimeException {
-    public CustomNotFoundException(long id) {
-        super("Element with id " + id + " not found");
+    public CustomNotFoundException(String entityName) {
+        super("Cannot find " + entityName + " with such id.");
     }
 }

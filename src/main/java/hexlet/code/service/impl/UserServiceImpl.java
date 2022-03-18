@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User updateUser(long id, UserDto dto) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new CustomNotFoundException(id));
+                .orElseThrow(() -> new CustomNotFoundException("User"));
 
         user.setEmail(dto.getEmail());
         user.setFirstName(dto.getFirstName());
