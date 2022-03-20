@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static hexlet.code.controller.UserController.USERS_CONTROLLER_PATH;
 import static hexlet.code.controller.TaskStatusController.TASK_STATUS_CONTROLLER_PATH;
+import static hexlet.code.controller.TaskController.TASK_CONTROLLER_PATH;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,6 +39,7 @@ public class TestUtils {
     public static final String DEFAULT_USER_DATA = "defaultUserData.json";
     public static final String UPDATE_USER_DATA = "updateUserData.json";
     public static final String DEFAULT_TASK_STATUS = "defaultTaskStatus.json";
+    public static final String DEFAULT_TASK_DATA = "defaultTaskData.json";
 
     @Autowired
     private MockMvc mockMvc;
@@ -60,12 +62,14 @@ public class TestUtils {
         return MAPPER.readValue(json, UserDto.class);
     }
 
-    public MockHttpServletResponse regDefaultUser() throws Exception {
-        String json = readFileContent(FIXTURES_PATH + DEFAULT_USER_DATA);
-        return perform(
-                post(BASE_URL + USERS_CONTROLLER_PATH)
-                        .content(json)
+    public void regDefaultTask() throws Exception {
+        String json = readFileContent(FIXTURES_PATH + DEFAULT_TASK_DATA);
+        final User user = userRepository.findAll().get(0);
+        MockHttpServletResponse response = perform(
+                post(BASE_URL + TASK_CONTROLLER_PATH)
                         .contentType(APPLICATION_JSON)
+                        .content(json),
+                user.getEmail()
         ).andReturn().getResponse();
     }
 
@@ -78,8 +82,15 @@ public class TestUtils {
                         .content(json),
                 user.getEmail()
         ).andReturn().getResponse();
+    }
 
-//        return taskStatusRepository.findAll().get(0);
+    public MockHttpServletResponse regDefaultUser() throws Exception {
+        String json = readFileContent(FIXTURES_PATH + DEFAULT_USER_DATA);
+        return perform(
+                post(BASE_URL + USERS_CONTROLLER_PATH)
+                        .content(json)
+                        .contentType(APPLICATION_JSON)
+        ).andReturn().getResponse();
     }
 
 
