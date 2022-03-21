@@ -6,10 +6,17 @@ users:
     password: $2a$12$lP1HdpYa4yT./wnilPzf0OoxaVHJunEkkxw4SwkYL5obPjq.fG8Xy
     created_at: 2022-03-14T19:27:35.641+00:00
 
+  - id: 13
+    email: owen.grey@gmail.com
+    first_name: Owen
+    last_name: Grey
+    password: $2a$12$lP1HdpYa4yT./wnilPzf0OoxaVHJunEkkxw4SwkYL5obPjq.fG8Xy
+    created_at: 2022-03-20T19:37:28.184+00:00
+
   - id: 16
-    email: testemail@gmail.com
-    first_name: FirstName
-    last_name: LastName
+    email: charles.mason@gmail.com
+    first_name: Charles
+    last_name: Mason
     password: $2a$12$lP1HdpYa4yT./wnilPzf0OoxaVHJunEkkxw4SwkYL5obPjq.fG8Xy
     created_at: 2022-03-20T19:37:28.184+00:00
 
@@ -18,14 +25,18 @@ task_statuses:
     name: New
     created_at: 2022-03-20T19:37:28.184+00:00
 
+  - id: 2
+    name: Updated
+    created_at: 2022-03-20T19:37:28.184+00:00
+
   - id: 3
     name: Closed
     created_at: 2022-03-14T19:27:35.641+00:00
 
 tasks:
   - id: 2
-    name: New Name
-    description: New Description
+    name: New task
+    description: Description of the new task
     task_status_id: 1
     executor_id: 16
     created_at: 2022-03-20T19:37:28.184+00:00

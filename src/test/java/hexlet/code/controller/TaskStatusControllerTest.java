@@ -46,31 +46,28 @@ class TaskStatusControllerTest {
     @Autowired
     private UserRepository userRepository;
 
-    private static String updateTaskStatusJson;
-
-    @BeforeAll
-    void initialization() {
-        updateTaskStatusJson = null;
-    }
 
     @Test
     public void createTaskStatusTest() throws Exception {
-        assertThat(taskStatusRepository.count()).isEqualTo(1);
+        assertThat(taskStatusRepository.count()).isEqualTo(3);
         utils.regDefaultTaskStatus();
-        assertThat(taskStatusRepository.count()).isEqualTo(2);
+        assertThat(taskStatusRepository.count()).isEqualTo(4);
     }
 
     @Test
     public void getTaskStatusById() throws Exception {
         utils.regDefaultTaskStatus();
-
-        final TaskStatus expectedTaskStatus = taskStatusRepository.findAll().get(0);
+        final TaskStatus expectedTaskStatus = taskStatusRepository.findAll().get(3);
 
         MockHttpServletResponse response = utils.perform(
                 get(utils.BASE_URL + TASK_STATUS_CONTROLLER_PATH + ID, expectedTaskStatus.getId())
         ).andReturn().getResponse();
 
+        String body = response.getContentAsString();
+
         assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.getContentType()).isEqualTo(APPLICATION_JSON.toString());
+        assertThat(body).contains("Created");
     }
 
     @Test
@@ -86,18 +83,18 @@ class TaskStatusControllerTest {
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(response.getContentType()).isEqualTo(APPLICATION_JSON.toString());
         assertThat(body).contains("Created");
+        assertThat(body).contains("New");
+        assertThat(body).contains("Closed");
+
     }
 
     @Test
     public void updateTaskStatusTest() throws Exception {
-        utils.regDefaultTaskStatus();
-        final TaskStatus expectedTaskStatus = taskStatusRepository.findAll().get(1);
+        final TaskStatus expectedTaskStatus = taskStatusRepository.findAll().get(0);
 
         final User user = userRepository.findAll().get(0);
 
-        String json = "{\n"
-                + "  \"name\": \"Updated\"\n"
-                + "}";
+        String json = "{\n  \"name\": \"Updated\"\n}";
 
         MockHttpServletResponse response = utils.perform(
                 put(utils.BASE_URL + TASK_STATUS_CONTROLLER_PATH + ID, expectedTaskStatus.getId())
@@ -116,7 +113,7 @@ class TaskStatusControllerTest {
     @Test
     public void deleteTaskStatusTest() throws Exception {
         utils.regDefaultTaskStatus();
-        final TaskStatus expectedTaskStatus = taskStatusRepository.findAll().get(1);
+        final TaskStatus expectedTaskStatus = taskStatusRepository.findAll().get(3);
 
         final User user = userRepository.findAll().get(0);
 
@@ -126,7 +123,7 @@ class TaskStatusControllerTest {
         ).andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(taskStatusRepository.count()).isEqualTo(1);
+        assertThat(taskStatusRepository.count()).isEqualTo(3);
 
     }
 }

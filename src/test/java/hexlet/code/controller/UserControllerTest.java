@@ -57,9 +57,9 @@ class UserControllerTest {
 
     @Test
     public void registrationUserTest() throws Exception {
-        assertThat(userRepository.count()).isEqualTo(1);
+        assertThat(userRepository.count()).isEqualTo(3);
         utils.regDefaultUser();
-        assertThat(userRepository.count()).isEqualTo(2);
+        assertThat(userRepository.count()).isEqualTo(4);
     }
 
     @Test
@@ -84,7 +84,7 @@ class UserControllerTest {
     @Test
     public void getUserByIdTest() throws Exception {
         utils.regDefaultUser();
-        final User expectedUser = userRepository.findAll().get(1);
+        final User expectedUser = userRepository.findAll().get(3);
 
         MockHttpServletResponse response = utils.perform(
                 get(utils.BASE_URL + USERS_CONTROLLER_PATH + ID, expectedUser.getId()),
@@ -96,7 +96,7 @@ class UserControllerTest {
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(response.getContentType()).isEqualTo(APPLICATION_JSON.toString());
         assertThat(body).contains("test@gmail.com");
-        assertThat(userRepository.findByEmail("example@gmail.com")).isNotNull();
+        assertThat(userRepository.findByEmail("test@gmail.com")).isNotNull();
         assertThat(body).contains("Ivan");
         assertThat(body).contains("Pavlov");
     }
@@ -126,10 +126,7 @@ class UserControllerTest {
 
     @Test
     public void testUpdateUserData() throws Exception {
-        utils.regDefaultUser();
-        final User expectedUser = userRepository.findAll().get(1);
-
-
+        final User expectedUser = userRepository.findAll().get(0);
         MockHttpServletResponse putResponse = utils.perform(
                 put(utils.BASE_URL + USERS_CONTROLLER_PATH + ID, expectedUser.getId())
                         .contentType(APPLICATION_JSON)
@@ -147,15 +144,14 @@ class UserControllerTest {
 
     @Test
     public void deleteUserTest() throws Exception {
-        utils.regDefaultUser();
-        final User expectedUser = userRepository.findAll().get(1);
+        final User expectedUser = userRepository.findAll().get(0);
         MockHttpServletResponse response = utils.perform(
                 delete(utils.BASE_URL + USERS_CONTROLLER_PATH + ID, expectedUser.getId()),
                 expectedUser.getEmail()
         ).andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(userRepository.count()).isEqualTo(1);
+        assertThat(userRepository.count()).isEqualTo(2);
     }
 
 }

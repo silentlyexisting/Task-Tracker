@@ -4,8 +4,11 @@ package hexlet.code.controller;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.junit5.api.DBRider;
 import hexlet.code.model.Task;
+import hexlet.code.model.User;
 import hexlet.code.repository.TaskRepository;
+import hexlet.code.repository.UserRepository;
 import hexlet.code.utils.TestUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.transaction.Transactional;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.TestInstance.Lifecycle;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +27,7 @@ import static hexlet.code.controller.TaskController.TASK_CONTROLLER_PATH;
 import static hexlet.code.controller.UserController.ID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @DBRider
@@ -37,6 +42,16 @@ class TaskControllerTest {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    private static String updateTaskJson;
+
+    @BeforeAll
+    void initialization() throws IOException {
+        updateTaskJson = utils.readFileContent(utils.FIXTURES_PATH + utils.UPDATE_TASK_DATA);
+    }
 
     @Test
     public void createTaskTest() throws Exception {
@@ -75,7 +90,41 @@ class TaskControllerTest {
         String body = response.getContentAsString();
 
         assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(body).contains("example@gmail.com"); // executor email
-        assertThat(body).contains("testemail@gmail.com"); // executor email
+        assertThat(body).contains("example@gmail.com");
+        assertThat(body).contains("charles.mason@gmail.com");
+    }
+
+    @Test
+    public void updateTaskTest() throws Exception {
+        final Task task = taskRepository.findAll().get(0);
+        final User user = userRepository.findAll().get(1);
+        MockHttpServletResponse response = utils.perform(
+                put(utils.BASE_URL + TASK_CONTROLLER_PATH + ID, task.getId())
+                        .contentType(APPLICATION_JSON)
+                        .content(updateTaskJson),
+                user.getEmail()
+        ).andReturn().getResponse();
+
+        String body = response.getContentAsString();
+
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.getContentType()).isEqualTo(APPLICATION_JSON.toString());
+        assertThat(body).contains("New name").contains("New description").contains("owen.grey@gmail.com");
+    }
+
+    @Test
+    public void deleteTaskTest() throws Exception {
+        utils.regDefaultTask();
+        final Task task = taskRepository.findAll().get(1);
+
+        final User user = userRepository.findAll().get(0);
+
+        MockHttpServletResponse response = utils.perform(
+                delete(utils.BASE_URL + TASK_CONTROLLER_PATH + ID, task.getId()),
+                user.getEmail()
+        ).andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(taskRepository.count()).isEqualTo(1);
     }
 }

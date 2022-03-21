@@ -40,6 +40,7 @@ public class TestUtils {
     public static final String UPDATE_USER_DATA = "updateUserData.json";
     public static final String DEFAULT_TASK_STATUS = "defaultTaskStatus.json";
     public static final String DEFAULT_TASK_DATA = "defaultTaskData.json";
+    public static final String UPDATE_TASK_DATA = "updateTaskData.json";
 
     @Autowired
     private MockMvc mockMvc;
