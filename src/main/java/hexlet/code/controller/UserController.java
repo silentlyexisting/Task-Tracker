@@ -27,7 +27,7 @@ import static hexlet.code.controller.UserController.USERS_CONTROLLER_PATH;
 public class UserController {
 
     public static final String USERS_CONTROLLER_PATH = "/users";
-    public static final String ID = "/{id}";
+    private static final String ID = "/{id}";
 
 
     private final UserService userService;
