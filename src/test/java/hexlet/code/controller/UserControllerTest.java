@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import static hexlet.code.controller.UserController.USERS_CONTROLLER_PATH;
-import static hexlet.code.controller.UserController.ID;
 
 import javax.transaction.Transactional;
 
@@ -87,7 +86,7 @@ class UserControllerTest {
         final User expectedUser = userRepository.findAll().get(3);
 
         MockHttpServletResponse response = utils.perform(
-                get(utils.BASE_URL + USERS_CONTROLLER_PATH + ID, expectedUser.getId()),
+                get(utils.BASE_URL + USERS_CONTROLLER_PATH + utils.ID, expectedUser.getId()),
                 expectedUser.getEmail()
         ).andReturn().getResponse();
 
@@ -128,7 +127,7 @@ class UserControllerTest {
     public void testUpdateUserData() throws Exception {
         final User expectedUser = userRepository.findAll().get(0);
         MockHttpServletResponse putResponse = utils.perform(
-                put(utils.BASE_URL + USERS_CONTROLLER_PATH + ID, expectedUser.getId())
+                put(utils.BASE_URL + USERS_CONTROLLER_PATH + utils.ID, expectedUser.getId())
                         .contentType(APPLICATION_JSON)
                         .content(updateUserJson),
                 expectedUser.getEmail()
@@ -146,7 +145,7 @@ class UserControllerTest {
     public void deleteUserTest() throws Exception {
         final User expectedUser = userRepository.findAll().get(0);
         MockHttpServletResponse response = utils.perform(
-                delete(utils.BASE_URL + USERS_CONTROLLER_PATH + ID, expectedUser.getId()),
+                delete(utils.BASE_URL + USERS_CONTROLLER_PATH + utils.ID, expectedUser.getId()),
                 expectedUser.getEmail()
         ).andReturn().getResponse();
 

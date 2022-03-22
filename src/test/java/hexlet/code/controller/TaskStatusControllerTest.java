@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import static hexlet.code.controller.TaskStatusController.TASK_STATUS_CONTROLLER_PATH;
-import static hexlet.code.controller.UserController.ID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -59,7 +58,7 @@ class TaskStatusControllerTest {
         final TaskStatus expectedTaskStatus = taskStatusRepository.findAll().get(3);
 
         MockHttpServletResponse response = utils.perform(
-                get(utils.BASE_URL + TASK_STATUS_CONTROLLER_PATH + ID, expectedTaskStatus.getId())
+                get(utils.BASE_URL + TASK_STATUS_CONTROLLER_PATH + utils.ID, expectedTaskStatus.getId())
         ).andReturn().getResponse();
 
         String body = response.getContentAsString();
@@ -96,7 +95,7 @@ class TaskStatusControllerTest {
         String json = "{\n  \"name\": \"Updated\"\n}";
 
         MockHttpServletResponse response = utils.perform(
-                put(utils.BASE_URL + TASK_STATUS_CONTROLLER_PATH + ID, expectedTaskStatus.getId())
+                put(utils.BASE_URL + TASK_STATUS_CONTROLLER_PATH + utils.ID, expectedTaskStatus.getId())
                         .contentType(APPLICATION_JSON)
                         .content(json),
                 user.getEmail()
@@ -117,7 +116,7 @@ class TaskStatusControllerTest {
         final User user = userRepository.findAll().get(0);
 
         MockHttpServletResponse response = utils.perform(
-                delete(utils.BASE_URL + TASK_STATUS_CONTROLLER_PATH + ID, expectedTaskStatus.getId()),
+                delete(utils.BASE_URL + TASK_STATUS_CONTROLLER_PATH + utils.ID, expectedTaskStatus.getId()),
                 user.getEmail()
         ).andReturn().getResponse();
 

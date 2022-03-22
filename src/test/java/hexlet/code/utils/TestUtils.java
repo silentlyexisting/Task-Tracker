@@ -22,6 +22,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static hexlet.code.controller.UserController.USERS_CONTROLLER_PATH;
 import static hexlet.code.controller.TaskStatusController.TASK_STATUS_CONTROLLER_PATH;
 import static hexlet.code.controller.TaskController.TASK_CONTROLLER_PATH;
+import static hexlet.code.controller.LabelController.LABEL_CONTROLLER_PATH;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,11 +37,14 @@ public class TestUtils {
     public static final ObjectMapper MAPPER = new ObjectMapper();
     public static final String FIXTURES_PATH = "src/test/resources/fixtures/";
     public static final String BASE_URL = "/api";
+    public static final String ID = "/{id}";
     public static final String DEFAULT_USER_DATA = "defaultUserData.json";
     public static final String UPDATE_USER_DATA = "updateUserData.json";
     public static final String DEFAULT_TASK_STATUS = "defaultTaskStatus.json";
     public static final String DEFAULT_TASK_DATA = "defaultTaskData.json";
     public static final String UPDATE_TASK_DATA = "updateTaskData.json";
+
+    private static final String DEFAULT_LABEL_DATA = "{\n  \"name\": \"New label\"\n}";
 
     @Autowired
     private MockMvc mockMvc;
@@ -61,6 +65,16 @@ public class TestUtils {
     public UserDto getTestRegistrationDto() throws IOException {
         String json = readFileContent(FIXTURES_PATH + DEFAULT_USER_DATA);
         return MAPPER.readValue(json, UserDto.class);
+    }
+
+    public void regDefaultLabel() throws Exception {
+        final User user = userRepository.findAll().get(0);
+        MockHttpServletResponse response = perform(
+                post(BASE_URL + LABEL_CONTROLLER_PATH)
+                        .contentType(APPLICATION_JSON)
+                        .content(DEFAULT_LABEL_DATA),
+                user.getEmail()
+        ).andReturn().getResponse();
     }
 
     public void regDefaultTask() throws Exception {
