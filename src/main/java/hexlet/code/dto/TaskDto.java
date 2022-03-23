@@ -7,6 +7,7 @@ import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,4 +26,7 @@ public class TaskDto {
 
     @Nullable
     private long executorId;
+
+    @Nullable
+    private List<Long> labels;
 }
