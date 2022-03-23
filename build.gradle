@@ -129,5 +129,8 @@ installFrontend {
 processResources.dependsOn assembleFrontend
 
 
+sourceSets.main.java.srcDirs = ['build/generated/sources/annotationProcessor/java/main','src/main/java']
+
+
 task stage(dependsOn: ['clean', 'installDist'])
 installDist.mustRunAfter clean
