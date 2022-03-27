@@ -6,9 +6,9 @@ import hexlet.code.model.Label;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.service.LabelService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository
+@Service
 @AllArgsConstructor
 public class LabelServiceImpl implements LabelService {
     private final LabelRepository labelRepository;

@@ -131,16 +131,6 @@ processResources.dependsOn assembleFrontend
 
 sourceSets.main.java.srcDirs = ['build/generated/sources/annotationProcessor/java/main','src/main/java']
 
-//checkstyleMain
-//		.exclude('/build/generated/sources/annotationProcessor/java/main/hexlet/code/model/*.java')
-
-//tasks.withType(Checkstyle) {
-//	exclude 'build'
-//}
-
-//assemble {
-//	finalizedBy cleanQuerydslSourcesDir
-//}
 
 checkstyleMain {
 	source = fileTree('src/main/java')

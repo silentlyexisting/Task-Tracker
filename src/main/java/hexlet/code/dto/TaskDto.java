@@ -28,5 +28,5 @@ public class TaskDto {
     private long executorId;
 
     @Nullable
-    private List<Long> labels;
+    private List<Long> labelsId;
 }
