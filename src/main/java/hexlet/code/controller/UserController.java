@@ -39,7 +39,7 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody @Valid UserDto userDto) {
-        return userService.createUser(userDto);
+        return userService.createNewUser(userDto);
     }
 
     @GetMapping(path = ID)
@@ -57,7 +57,7 @@ public class UserController {
     @PreAuthorize(ONLY_OWNER_BY_ID)
     public User updateUser(@PathVariable long id,
                            @RequestBody @Valid UserDto userDto) {
-        return userService.updateUser(id, userDto);
+        return userService.updateExistingUser(id, userDto);
     }
 
     @DeleteMapping(path = ID)

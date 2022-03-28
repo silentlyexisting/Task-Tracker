@@ -14,12 +14,12 @@ public class LabelServiceImpl implements LabelService {
     private final LabelRepository labelRepository;
 
     @Override
-    public Label createLabel(LabelDto labelDto) {
+    public Label createNewLabel(LabelDto labelDto) {
         return labelRepository.save(new Label(labelDto.getName()));
     }
 
     @Override
-    public Label updateLabel(long id, LabelDto labelDto) {
+    public Label updateExistingLabel(long id, LabelDto labelDto) {
         Label labelToUpdate = labelRepository.findById(id)
                 .orElseThrow(() -> new CustomNotFoundException("Label"));
         labelToUpdate.setName(labelDto.getName());

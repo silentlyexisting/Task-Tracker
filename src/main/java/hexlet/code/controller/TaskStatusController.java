@@ -38,7 +38,7 @@ public class TaskStatusController {
 
     @PostMapping
     public TaskStatus createTaskStatus(@RequestBody @Valid TaskStatusDto taskStatusDto) {
-        return taskStatusService.createTaskStatus(taskStatusDto);
+        return taskStatusService.createNewTaskStatus(taskStatusDto);
     }
 
     @GetMapping(path = ID)
@@ -56,7 +56,7 @@ public class TaskStatusController {
 //    @PreAuthorize(ONLY_OWNER_BY_ID)
     public TaskStatus updateTaskStatus(@PathVariable(name = "id") long id,
                                        @RequestBody @Valid TaskStatusDto taskStatusDto) {
-        return taskStatusService.updateTaskStatus(id, taskStatusDto);
+        return taskStatusService.updateExistingTaskStatus(id, taskStatusDto);
     }
 
     @DeleteMapping(path = ID)

@@ -6,6 +6,7 @@ import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +23,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    public User createNewUser(UserDto userDto) {
+        return userRepository.save(new User(
+                userDto.getEmail(),
+                userDto.getFirstName(),
+                userDto.getLastName(),
+                passwordEncoder.encode(userDto.getPassword())
+        ));
+    }
+
+    @Override
+    public User updateExistingUser(long id, UserDto dto) {
+        final User userToUpdate = userRepository.findById(id)
+                        .orElseThrow(() -> new CustomNotFoundException("User"));
+        userToUpdate.setEmail(dto.getEmail());
+        userToUpdate.setFirstName(dto.getFirstName());
+        userToUpdate.setLastName(dto.getLastName());
+        userToUpdate.setPassword(passwordEncoder.encode(dto.getPassword()));
+        return userRepository.save(userToUpdate);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        final var username = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userRepository.findByEmail(username.toString()).get();
+    }
+
+    @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
                 .map(this::convertToSpringUser)
@@ -34,29 +62,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 user.getPassword(),
                 AUTHORITIES
         );
-    }
-
-    @Override
-    public User createUser(UserDto userDto) {
-        User user = new User(
-                userDto.getEmail(),
-                userDto.getFirstName(),
-                userDto.getLastName(),
-                passwordEncoder.encode(userDto.getPassword())
-        );
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User updateUser(long id, UserDto dto) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new CustomNotFoundException("User"));
-
-        user.setEmail(dto.getEmail());
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        return userRepository.save(user);
     }
 
 }

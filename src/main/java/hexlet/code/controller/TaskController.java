@@ -39,7 +39,7 @@ public class TaskController {
 
     @PostMapping
     public Task createTask(@RequestBody @Valid TaskDto taskDto) {
-        return taskService.createTask(taskDto);
+        return taskService.createNewTask(taskDto);
     }
 
     @GetMapping(ID)
@@ -56,7 +56,7 @@ public class TaskController {
     @PutMapping(path = ID)
     public Task updateTask(@PathVariable(name = "id") long id,
                            @RequestBody @Valid TaskDto taskDto) {
-        return taskService.updateTask(id, taskDto);
+        return taskService.updateExistingTask(id, taskDto);
     }
 
     @DeleteMapping(path = ID)
@@ -66,7 +66,7 @@ public class TaskController {
     }
 
     @GetMapping
-    public Iterable<Task> getFiltratedTask(@QuerydslPredicate Predicate predicate) {
+    public Iterable<Task> getFiltratedTask(@QuerydslPredicate(root = Task.class) Predicate predicate) {
         return taskRepository.findAll(predicate);
     }
 }

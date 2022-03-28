@@ -18,15 +18,12 @@ public class TaskDto {
     @Size(min = 1, message = "Task name must contain at least 1 character")
     private String name;
 
-    @Nullable
     private String description;
 
     @NotNull
     private long taskStatusId;
 
-    @Nullable
     private long executorId;
 
-    @Nullable
     private List<Long> labelsId;
 }

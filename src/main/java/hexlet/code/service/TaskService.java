@@ -4,6 +4,6 @@ import hexlet.code.dto.TaskDto;
 import hexlet.code.model.Task;
 
 public interface TaskService {
-    Task createTask(TaskDto taskDto);
-    Task updateTask(long id, TaskDto taskDto);
+    Task createNewTask(TaskDto taskDto);
+    Task updateExistingTask(long id, TaskDto taskDto);
 }

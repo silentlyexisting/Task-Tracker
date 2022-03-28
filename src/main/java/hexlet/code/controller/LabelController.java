@@ -33,7 +33,7 @@ public class LabelController {
 
     @PostMapping
     public Label createLabel(@RequestBody @Valid LabelDto labelDto) {
-        return labelService.createLabel(labelDto);
+        return labelService.createNewLabel(labelDto);
     }
 
     @GetMapping(ID)
@@ -50,7 +50,7 @@ public class LabelController {
     @PutMapping(ID)
     public Label updateLabelById(@PathVariable(name = "id") long id,
                                  @RequestBody @Valid LabelDto labelDto) {
-        return labelService.updateLabel(id, labelDto);
+        return labelService.updateExistingLabel(id, labelDto);
     }
 
     @DeleteMapping(ID)
