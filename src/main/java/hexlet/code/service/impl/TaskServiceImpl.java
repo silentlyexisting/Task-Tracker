@@ -13,7 +13,6 @@ import hexlet.code.repository.UserRepository;
 import hexlet.code.service.TaskService;
 import hexlet.code.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,7 +38,7 @@ public class TaskServiceImpl implements TaskService {
                 getExecutorForTaskCreation(taskDto)
         );
 
-        if (taskDto.getLabelsId() != null) {
+        if (taskDto.getLabelIds() != null) {
             task.setLabels(getLabelsForTaskCreation(taskDto));
         }
 
@@ -57,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
         taskToUpdate.setAuthor(userService.getCurrentUser());
         taskToUpdate.setExecutor(getExecutorForTaskCreation(taskDto));
 
-        if (taskDto.getLabelsId() != null) {
+        if (taskDto.getLabelIds() != null) {
             taskToUpdate.setLabels(getLabelsForTaskCreation(taskDto));
         }
 
@@ -65,7 +64,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     private List<Label> getLabelsForTaskCreation(TaskDto taskDto) {
-        return taskDto.getLabelsId().stream().map(id -> labelRepository.findById(id)
+        return taskDto.getLabelIds().stream().map(id -> labelRepository.findById(id)
                 .orElseThrow(() -> new CustomNotFoundException("Label")))
                 .collect(Collectors.toList());
     }
