@@ -40,10 +40,8 @@ class TaskControllerTest {
 
     @Autowired
     private TestUtils utils;
-
     @Autowired
     private TaskRepository taskRepository;
-
     @Autowired
     private UserRepository userRepository;
 
@@ -51,7 +49,7 @@ class TaskControllerTest {
 
     @BeforeAll
     void initialization() throws IOException {
-        updateTaskJson = utils.readFileContent(utils.FIXTURES_PATH + utils.UPDATE_TASK_DATA);
+        updateTaskJson = utils.readFixturesAsString(utils.FIXTURES_PATH + utils.UPDATE_TASK_DATA);
     }
 
     @Test
@@ -76,8 +74,9 @@ class TaskControllerTest {
         assertThat(response.getContentType()).isEqualTo(APPLICATION_JSON.toString());
         assertThat(body).contains("Test Task");
         assertThat(body).contains("Testing task handler");
-        assertThat(body).contains("Closed"); // task status
+        assertThat(body).contains("Important"); // task status
         assertThat(body).contains("example@gmail.com"); // executor email
+        assertThat(body).contains("Documentation");
     }
 
     @Test
@@ -96,6 +95,20 @@ class TaskControllerTest {
     }
 
     @Test
+    public void getAllTasksWithFiltration() throws Exception {
+        utils.regDefaultTask();
+        MockHttpServletResponse response = utils.perform(
+                get(utils.BASE_URL + TASK_CONTROLLER_PATH + "?taskStatusId=3&executorId=10&labelIds=3")
+                        .contentType(APPLICATION_JSON)
+        ).andReturn().getResponse();
+
+        final String body = response.getContentAsString();
+
+        assertThat(body).contains("Test Task").contains("Testing task handler");
+        assertThat(body).contains("Important").contains("example@gmail.com").contains("Documentation");
+    }
+
+    @Test
     public void updateTaskTest() throws Exception {
         final Task task = taskRepository.findAll().get(0);
         final User user = userRepository.findAll().get(1);
@@ -110,7 +123,8 @@ class TaskControllerTest {
 
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(response.getContentType()).isEqualTo(APPLICATION_JSON.toString());
-        assertThat(body).contains("New name").contains("New description").contains("owen.grey@gmail.com");
+        assertThat(body).contains("New name").contains("New description")
+                .contains("owen.grey@gmail.com").contains("Documentation");
     }
 
     @Test

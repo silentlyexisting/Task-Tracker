@@ -2,5 +2,6 @@
   "name": "Test Task",
   "description": "Testing task handler",
   "taskStatusId": 3,
-  "executorId": 10
+  "executorId": 10,
+  "labelIds": [3]
 }

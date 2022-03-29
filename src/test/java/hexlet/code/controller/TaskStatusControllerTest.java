@@ -37,13 +37,12 @@ class TaskStatusControllerTest {
 
     @Autowired
     private TaskStatusRepository taskStatusRepository;
-
     @Autowired
     private TestUtils utils;
-
     @Autowired
     private UserRepository userRepository;
 
+    private static final String UPDATE_STATUS_DATA = "{\n  \"name\": \"Updated\"\n}";;
 
     @Test
     public void createTaskStatusTest() throws Exception {
@@ -82,8 +81,7 @@ class TaskStatusControllerTest {
         assertThat(response.getContentType()).isEqualTo(APPLICATION_JSON.toString());
         assertThat(body).contains("Created");
         assertThat(body).contains("New");
-        assertThat(body).contains("Closed");
-
+        assertThat(body).contains("Important");
     }
 
     @Test
@@ -92,12 +90,10 @@ class TaskStatusControllerTest {
 
         final User user = userRepository.findAll().get(0);
 
-        String json = "{\n  \"name\": \"Updated\"\n}";
-
         MockHttpServletResponse response = utils.perform(
                 put(utils.BASE_URL + TASK_STATUS_CONTROLLER_PATH + utils.ID, expectedTaskStatus.getId())
                         .contentType(APPLICATION_JSON)
-                        .content(json),
+                        .content(UPDATE_STATUS_DATA),
                 user.getEmail()
         ).andReturn().getResponse();
 

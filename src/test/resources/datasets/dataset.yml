@@ -30,7 +30,7 @@ task_statuses:
     created_at: 2022-03-20T19:37:28.184+00:00
 
   - id: 3
-    name: Closed
+    name: Important
     created_at: 2022-03-14T19:27:35.641+00:00
 
 tasks:

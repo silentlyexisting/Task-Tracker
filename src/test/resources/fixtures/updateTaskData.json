@@ -2,5 +2,6 @@
   "name": "New name",
   "description": "New description",
   "taskStatusId": 1,
-  "executorId": 16
+  "executorId": 16,
+  "labelIds": [3]
 }

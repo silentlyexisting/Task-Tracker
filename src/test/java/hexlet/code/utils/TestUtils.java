@@ -43,27 +43,23 @@ public class TestUtils {
     public static final String DEFAULT_TASK_STATUS = "defaultTaskStatus.json";
     public static final String DEFAULT_TASK_DATA = "defaultTaskData.json";
     public static final String UPDATE_TASK_DATA = "updateTaskData.json";
-
     private static final String DEFAULT_LABEL_DATA = "{\n  \"name\": \"New label\"\n}";
 
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private TokenGenerator tokenGenerator;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private TaskStatusRepository taskStatusRepository;
 
-    public String readFileContent(String path) throws IOException {
+    public String readFixturesAsString(String path) throws IOException {
         return Files.readString(Path.of(path).toAbsolutePath().normalize());
     }
 
     public UserDto getTestRegistrationDto() throws IOException {
-        String json = readFileContent(FIXTURES_PATH + DEFAULT_USER_DATA);
+        String json = readFixturesAsString(FIXTURES_PATH + DEFAULT_USER_DATA);
         return MAPPER.readValue(json, UserDto.class);
     }
 
@@ -78,7 +74,7 @@ public class TestUtils {
     }
 
     public void regDefaultTask() throws Exception {
-        String json = readFileContent(FIXTURES_PATH + DEFAULT_TASK_DATA);
+        String json = readFixturesAsString(FIXTURES_PATH + DEFAULT_TASK_DATA);
         final User user = userRepository.findAll().get(0);
         MockHttpServletResponse response = perform(
                 post(BASE_URL + TASK_CONTROLLER_PATH)
@@ -89,7 +85,7 @@ public class TestUtils {
     }
 
     public void regDefaultTaskStatus() throws Exception {
-        String json = readFileContent(FIXTURES_PATH + DEFAULT_TASK_STATUS);
+        String json = readFixturesAsString(FIXTURES_PATH + DEFAULT_TASK_STATUS);
         final User user = userRepository.findAll().get(0);
         MockHttpServletResponse response =  perform(
                 post(BASE_URL + TASK_STATUS_CONTROLLER_PATH)
@@ -100,14 +96,13 @@ public class TestUtils {
     }
 
     public MockHttpServletResponse regDefaultUser() throws Exception {
-        String json = readFileContent(FIXTURES_PATH + DEFAULT_USER_DATA);
+        String json = readFixturesAsString(FIXTURES_PATH + DEFAULT_USER_DATA);
         return perform(
                 post(BASE_URL + USERS_CONTROLLER_PATH)
                         .content(json)
                         .contentType(APPLICATION_JSON)
         ).andReturn().getResponse();
     }
-
 
     public ResultActions perform(final MockHttpServletRequestBuilder request) throws Exception {
         return mockMvc.perform(request);
@@ -118,5 +113,4 @@ public class TestUtils {
         request.header(AUTHORIZATION, token);
         return perform(request);
     }
-
 }

@@ -43,7 +43,6 @@ class UserControllerTest {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private TestUtils utils;
 
@@ -51,7 +50,7 @@ class UserControllerTest {
 
     @BeforeAll
     void initialization() throws IOException {
-        updateUserJson = utils.readFileContent(TestUtils.FIXTURES_PATH + UPDATE_USER_DATA);
+        updateUserJson = utils.readFixturesAsString(utils.FIXTURES_PATH + UPDATE_USER_DATA);
     }
 
     @Test
@@ -108,7 +107,7 @@ class UserControllerTest {
                 get(utils.BASE_URL + USERS_CONTROLLER_PATH)
         ).andReturn().getResponse();
 
-        String body = response.getContentAsString();
+        final String body = response.getContentAsString();
 
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(response.getContentType()).isEqualTo(APPLICATION_JSON.toString());
@@ -133,7 +132,7 @@ class UserControllerTest {
                 expectedUser.getEmail()
         ).andReturn().getResponse();
 
-        String body = putResponse.getContentAsString();
+        final String body = putResponse.getContentAsString();
 
         assertThat(putResponse.getStatus()).isEqualTo(200);
         assertThat(body).contains("updated@gmail.com");
@@ -152,5 +151,4 @@ class UserControllerTest {
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(userRepository.count()).isEqualTo(2);
     }
-
 }
