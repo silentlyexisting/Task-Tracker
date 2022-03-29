@@ -51,7 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 loginRequest,
                 new AntPathRequestMatcher(baseUrl + USERS_CONTROLLER_PATH, POST.toString()),
                 new AntPathRequestMatcher(baseUrl + USERS_CONTROLLER_PATH, GET.toString()),
-//                new AntPathRequestMatcher(baseUrl + TASK_STATUS_CONTROLLER_PATH, POST.toString()),
                 new AntPathRequestMatcher(baseUrl + TASK_STATUS_CONTROLLER_PATH, GET.toString()),
                 new AntPathRequestMatcher(baseUrl + TASK_STATUS_CONTROLLER_PATH + "/{id}", GET.toString()),
                 new AntPathRequestMatcher(baseUrl + TASK_CONTROLLER_PATH, GET.toString()),
