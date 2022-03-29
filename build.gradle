@@ -136,6 +136,10 @@ checkstyleMain {
 	source = fileTree('src/main/java')
 }
 
+openApi {
+	apiDocsUrl.set("http://localhost:7000/v3/api-docs")
+}
+
 
 task stage(dependsOn: ['clean', 'installDist'])
 installDist.mustRunAfter clean
