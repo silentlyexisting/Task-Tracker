@@ -15,15 +15,13 @@ public class TaskStatusServiceImpl implements TaskStatusService {
     private final TaskStatusRepository taskStatusRepository;
 
     @Override
-    public TaskStatus createNewTaskStatus(TaskStatusDto taskStatusDto) {
+    public TaskStatus createNewTaskStatus(final TaskStatusDto taskStatusDto) {
         return taskStatusRepository.save(new TaskStatus(
-                taskStatusDto.getName()
-        ));
+                taskStatusDto.getName()));
     }
 
-
     @Override
-    public TaskStatus updateExistingTaskStatus(long id, TaskStatusDto taskStatusDto) {
+    public TaskStatus updateExistingTaskStatus(final long id, final TaskStatusDto taskStatusDto) {
         TaskStatus taskStatusToUpdate = taskStatusRepository.findById(id)
                 .orElseThrow(() -> new CustomNotFoundException("Task Status"));
 

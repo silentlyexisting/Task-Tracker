@@ -13,17 +13,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 import static hexlet.code.config.security.SecurityConfig.AUTHORITIES;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public User createNewUser(UserDto userDto) {
+    public User createNewUser(final UserDto userDto) {
         return userRepository.save(new User(
                 userDto.getEmail(),
                 userDto.getFirstName(),
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User updateExistingUser(long id, UserDto dto) {
+    public User updateExistingUser(final long id, final UserDto dto) {
         final User userToUpdate = userRepository.findById(id)
                         .orElseThrow(() -> new CustomNotFoundException("User"));
         userToUpdate.setEmail(dto.getEmail());
@@ -63,5 +63,4 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 AUTHORITIES
         );
     }
-
 }

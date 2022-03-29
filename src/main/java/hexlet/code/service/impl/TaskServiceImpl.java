@@ -14,7 +14,6 @@ import hexlet.code.service.TaskService;
 import hexlet.code.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,8 +28,8 @@ public class TaskServiceImpl implements TaskService {
     private final UserService userService;
 
     @Override
-    public Task createNewTask(TaskDto taskDto) {
-        Task task = new Task(
+    public Task createNewTask(final TaskDto taskDto) {
+        final Task newTask = new Task(
                 taskDto.getName(),
                 taskDto.getDescription(),
                 getTaskStatusForTaskCreation(taskDto),
@@ -39,15 +38,15 @@ public class TaskServiceImpl implements TaskService {
         );
 
         if (taskDto.getLabelIds() != null) {
-            task.setLabels(getLabelsForTaskCreation(taskDto));
+            newTask.setLabels(getLabelsForTaskCreation(taskDto));
         }
 
-        return taskRepository.save(task);
+        return taskRepository.save(newTask);
     }
 
     @Override
-    public Task updateExistingTask(long id, TaskDto taskDto) {
-        Task taskToUpdate = taskRepository.findById(id)
+    public Task updateExistingTask(final long id, final TaskDto taskDto) {
+        final Task taskToUpdate = taskRepository.findById(id)
                 .orElseThrow(() -> new CustomNotFoundException("Task"));
 
         taskToUpdate.setName(taskDto.getName());
@@ -63,22 +62,17 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.save(taskToUpdate);
     }
 
-    private List<Label> getLabelsForTaskCreation(TaskDto taskDto) {
-        return taskDto.getLabelIds().stream().map(id -> labelRepository.findById(id)
-                .orElseThrow(() -> new CustomNotFoundException("Label")))
+    private List<Label> getLabelsForTaskCreation(final TaskDto taskDto) {
+        return taskDto.getLabelIds().stream().map(id -> labelRepository.findById(id).get())
                 .collect(Collectors.toList());
     }
 
 
-    private TaskStatus getTaskStatusForTaskCreation(TaskDto taskDto) {
-        return taskStatusRepository.findById(taskDto.getTaskStatusId())
-                .orElseThrow(() -> new CustomNotFoundException("Task Status"));
+    private TaskStatus getTaskStatusForTaskCreation(final TaskDto taskDto) {
+        return taskStatusRepository.findById(taskDto.getTaskStatusId()).get();
     }
 
-    private User getExecutorForTaskCreation(TaskDto taskDto) {
-        return userRepository.findById(taskDto.getExecutorId())
-                .orElseThrow(() -> new CustomNotFoundException("User (Executor)"));
+    private User getExecutorForTaskCreation(final TaskDto taskDto) {
+        return userRepository.findById(taskDto.getExecutorId()).get();
     }
-
-
 }

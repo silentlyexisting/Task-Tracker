@@ -11,17 +11,19 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class LabelServiceImpl implements LabelService {
+
     private final LabelRepository labelRepository;
 
     @Override
-    public Label createNewLabel(LabelDto labelDto) {
+    public Label createNewLabel(final LabelDto labelDto) {
         return labelRepository.save(new Label(labelDto.getName()));
     }
 
     @Override
-    public Label updateExistingLabel(long id, LabelDto labelDto) {
+    public Label updateExistingLabel(final long id, final LabelDto labelDto) {
         Label labelToUpdate = labelRepository.findById(id)
                 .orElseThrow(() -> new CustomNotFoundException("Label"));
+
         labelToUpdate.setName(labelDto.getName());
         return labelRepository.save(labelToUpdate);
     }
