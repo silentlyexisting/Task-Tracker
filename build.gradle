@@ -64,7 +64,6 @@ dependencies {
 			'org.liquibase.ext:liquibase-hibernate5:4.5.0',
 			'org.springframework.boot:spring-boot-starter-data-jpa'
 	)
-
 }
 
 // Настраиваем таску diffChangeLog таким образом,
@@ -128,9 +127,7 @@ installFrontend {
 
 processResources.dependsOn assembleFrontend
 
-
 sourceSets.main.java.srcDirs = ['build/generated/sources/annotationProcessor/java/main','src/main/java']
-
 
 checkstyleMain {
 	source = fileTree('src/main/java')
@@ -139,7 +136,6 @@ checkstyleMain {
 openApi {
 	apiDocsUrl.set("http://localhost:7000/v3/api-docs")
 }
-
 
 task stage(dependsOn: ['clean', 'installDist'])
 installDist.mustRunAfter clean
