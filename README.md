@@ -4,9 +4,9 @@
 <a href="https://codeclimate.com/github/silentlyexisting/java-project-lvl5/maintainability"><img src="https://api.codeclimate.com/v1/badges/c14850b34d5cf8378bdd/maintainability" /></a>
 <a href="https://codeclimate.com/github/silentlyexisting/java-project-lvl5/test_coverage"><img src="https://api.codeclimate.com/v1/badges/c14850b34d5cf8378bdd/test_coverage" /></a>
 
-## Task Manager
-###Project demo: [Click here](https://fierce-tor-82525.herokuapp.com)
-###<b>API: [Click here](https://fierce-tor-82525.herokuapp.com/swagger-ui.html) </b>
+## Task Tracker
+### Project demo: [Click here](https://fierce-tor-82525.herokuapp.com)
+### <b>API: [Click here](https://fierce-tor-82525.herokuapp.com/swagger-ui.html) </b>
 
 ### To run project in development environment:
 ```shell
@@ -24,11 +24,11 @@ make start-prod
 
 ### Configuration
 
-###application.properties
+### application.properties
 `server.port` - where `${PORT:7000}`default port
 `spring.profiles.active` -  where`${APP_ENV}` application environment 
 
-###application-dev.properties
+### application-dev.properties
 `spring.datasource.url` - development database url
 
 `spring.datasource.username` - database username
@@ -37,7 +37,7 @@ make start-prod
 
 `spring.h2.console.path` - database h2 console path
 
-###application-prod.properties
+### application-prod.properties
 `spring.datasource.url` - where `${JDBC_DATABASE_URL}` production Heroku Postgres database url
 
 `springdoc.swagger-ui.path` - swagger api path

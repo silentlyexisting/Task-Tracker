@@ -11,9 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 @OpenAPIDefinition(
         info = @Info(
-                title = "Task Manager API",
+                title = "Task Tracker API",
                 version = "1.0",
-                description = "Task manager documentation"
+                description = "Task Tracker documentation"
         )
 )
 public class AppApplication {
