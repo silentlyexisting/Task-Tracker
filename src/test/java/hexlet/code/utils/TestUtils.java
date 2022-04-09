@@ -38,11 +38,11 @@ public class TestUtils {
     public static final String FIXTURES_PATH = "src/test/resources/fixtures/";
     public static final String BASE_URL = "/api";
     public static final String ID = "/{id}";
-    public static final String DEFAULT_USER_DATA = "defaultUserData.json";
     public static final String UPDATE_USER_DATA = "updateUserData.json";
-    public static final String DEFAULT_TASK_STATUS = "defaultTaskStatus.json";
-    public static final String DEFAULT_TASK_DATA = "defaultTaskData.json";
     public static final String UPDATE_TASK_DATA = "updateTaskData.json";
+    private static final String DEFAULT_USER_DATA = "defaultUserData.json";
+    private static final String DEFAULT_TASK_STATUS = "defaultTaskStatus.json";
+    private static final String DEFAULT_TASK_DATA = "defaultTaskData.json";
     private static final String DEFAULT_LABEL_DATA = "{\n  \"name\": \"New label\"\n}";
 
     @Autowired
