@@ -117,7 +117,7 @@ class UserControllerTest {
     @Test
     public void duplicateUserRegistrationTest() throws Exception {
         final var user = utils.regDefaultUser();
-        assertThat(user.getStatus()).isEqualTo(200);
+        assertThat(user.getStatus()).isEqualTo(201);
         final var duplicateUser = utils.regDefaultUser();
         assertThat(duplicateUser.getStatus()).isEqualTo(500);
     }
