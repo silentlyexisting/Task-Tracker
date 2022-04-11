@@ -3,13 +3,11 @@ package hexlet.code.config.rollbar;
 import com.rollbar.notifier.Rollbar;
 import com.rollbar.notifier.config.Config;
 import com.rollbar.spring.webmvc.RollbarSpringConfigBuilder;
-//import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-//@Slf4j
 @Configuration
 @ComponentScan({
 
@@ -21,8 +19,8 @@ public class RollbarConfig {
     @Value("${rollbar_token:}")
     private String rollbarToken;
 
-//    @Value("${spring.profiles.active:}")
-//    private String activeProfile;
+    @Value("${spring.profiles.active:}")
+    private String activeProfile;
 
     /**
      * Register a Rollbar bean to configure App with Rollbar.
@@ -36,6 +34,7 @@ public class RollbarConfig {
 
         return RollbarSpringConfigBuilder.withAccessToken(accessToken)
                 .environment("development")
+                .enabled(activeProfile == "prod")
                 .build();
     }
 }
