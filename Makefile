@@ -5,10 +5,10 @@ build:
 	./gradlew clean build
 
 start-dev:
-	APP_ENV=dev ./gradlew bootRun
+	./gradlew bootRun --args='--spring.profiles.active=dev'
 
 start-prod:
-	APP_ENV=prod ./gradlew bootRun
+	./gradlew bootRun --args='--spring.profiles.active=prod'
 
 install:
 	 ./gradlew installDist
