@@ -1,5 +1,6 @@
 package hexlet.code.controller;
 
+import com.rollbar.notifier.Rollbar;
 import hexlet.code.dto.UserDto;
 import hexlet.code.exception.CustomNotFoundException;
 import hexlet.code.model.User;
@@ -32,6 +33,7 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final UserService userService;
+    private final Rollbar rollbar;
 
     public static final String USERS_CONTROLLER_PATH = "/users";
     private static final String ID = "/{id}";
@@ -46,6 +48,7 @@ public class UserController {
     })
     @PostMapping
     public User createUser(@Parameter(description = "User data") @RequestBody @Valid UserDto userDto) {
+        rollbar.debug("Here is some debug message");
         return userService.createNewUser(userDto);
     }
 
