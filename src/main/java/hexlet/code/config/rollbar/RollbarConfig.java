@@ -19,7 +19,7 @@ public class RollbarConfig {
     @Value("${rollbar_token:}")
     private String rollbarToken;
 
-    @Value("${APP_ENV:}")
+    @Value("${spring.profiles.active:}")
     private String activeProfile;
 
     /**
@@ -34,8 +34,8 @@ public class RollbarConfig {
     private Config getRollbarConfigs(String accessToken) {
 
         return RollbarSpringConfigBuilder.withAccessToken(accessToken)
-                .environment("development")
-                .enabled(activeProfile == "production")
+                .environment("dev")
+                .enabled(activeProfile == "prod")
                 .build();
     }
 }
