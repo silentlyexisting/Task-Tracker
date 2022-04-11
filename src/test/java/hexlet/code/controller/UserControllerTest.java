@@ -66,6 +66,8 @@ class UserControllerTest {
 
         final LoginDto loginDto = new LoginDto(
                 utils.getTestRegistrationDto().getEmail(),
+                utils.getTestRegistrationDto().getFirstName(),
+                utils.getTestRegistrationDto().getLastName(),
                 utils.getTestRegistrationDto().getPassword()
         );
 
