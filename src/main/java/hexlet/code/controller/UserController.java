@@ -48,7 +48,6 @@ public class UserController {
     })
     @PostMapping
     public User createUser(@Parameter(description = "User data") @RequestBody @Valid UserDto userDto) {
-        rollbar.debug("Here is some debug message");
         return userService.createNewUser(userDto);
     }
 
@@ -68,6 +67,7 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Received successfully")
     @GetMapping
     public List<User> getUsers() {
+        rollbar.debug("Here is some debug message");
         return userRepository.findAll();
     }
 
