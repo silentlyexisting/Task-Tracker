@@ -50,7 +50,9 @@ dependencies {
 	implementation 'com.h2database:h2:1.4.200'
 
 	implementation 'org.springdoc:springdoc-openapi-ui:1.5.12'
-	implementation 'org.liquibase:liquibase-core:4.6.1'
+	implementation 'com.rollbar:rollbar-spring-boot-webmvc:1.8.1'
+
+	implementation('com.rollbar:rollbar-spring-webmvc:1.8.1')
 
 	annotationProcessor(
 			'com.querydsl:querydsl-apt:5.0.0:jpa',
