@@ -14,6 +14,7 @@ public class LoginDto {
 
     @Nullable
     private String firstName;
+
     @Nullable
     private String lastName;
 
