@@ -26,6 +26,7 @@ make start-prod
 
 ### application.properties
 `server.port` - where `${PORT:7000}`default port
+
 `spring.profiles.active` -  where`${APP_ENV}` application environment 
 
 ### application-dev.properties
