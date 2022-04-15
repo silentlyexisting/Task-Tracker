@@ -87,6 +87,7 @@ public class TaskStatusController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Deleted successfully"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "422", description = "Access denied"),
             @ApiResponse(responseCode = "404", description = "Task status not found")
     })
     @DeleteMapping(path = ID)

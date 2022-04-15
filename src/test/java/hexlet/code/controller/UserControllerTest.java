@@ -121,7 +121,7 @@ class UserControllerTest {
         final var user = utils.regDefaultUser();
         assertThat(user.getStatus()).isEqualTo(201);
         final var duplicateUser = utils.regDefaultUser();
-        assertThat(duplicateUser.getStatus()).isEqualTo(500);
+        assertThat(duplicateUser.getStatus()).isEqualTo(422);
     }
 
     @Test
